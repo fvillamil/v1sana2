@@ -1,0 +1,127 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Sana Tu Abundancia - Oficial</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:italic&family=Inter:wght@400;500;600;700;800;900&family=Dancing+Script:wght@700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        "brand-fuchsia": "#FF00FF",
+                        "brand-yellow": "#FACC15",
+                        "brand-black": "#1A1A1A",
+                        "brand-dark": "#F8F8F8",
+                        "brand-green": "#22C55E",
+                    },
+                    fontFamily: {
+                        "serif": ["'DM Serif Display'", "serif"],
+                        "sans": ["Inter", "sans-serif"],
+                        "script": ["'Dancing Script'", "cursive"]
+                    },
+                    animation: {
+                        'float-slow': 'float 20s ease-in-out infinite',
+                        'float-reverse': 'float-reverse 25s ease-in-out infinite',
+                    }
+                },
+            },
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer base {
+            body { @apply bg-[#12121a] text-white; }
+        }
+        .text-glow-gold {
+            text-shadow: 0 0 20px rgba(250, 204, 21, 0.4);
+        }
+        .btn-green-gradient {
+            background: linear-gradient(180deg, #4ade80 0%, #15803d 100%);
+            box-shadow: 0 10px 40px -10px rgba(21, 128, 61, 0.6), inset 0 2px 2px rgba(255, 255, 255, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .btn-fuchsia-gradient {
+            background: linear-gradient(180deg, #FF00FF 0%, #CC00CC 100%);
+            box-shadow: 0 10px 40px -10px rgba(255, 0, 255, 0.6), inset 0 2px 2px rgba(255, 255, 255, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .hero-overlay {
+            background: radial-gradient(circle at center, rgba(30, 30, 45, 0) 0%, rgba(18, 18, 26, 0.8) 100%);
+        }
+        .cta-pulse {
+            animation: pulse-green 2s infinite;
+        }
+        .cta-pulse-fuchsia {
+            animation: pulse-fuchsia 2s infinite;
+        }
+        @keyframes pulse-green {
+            0% { box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.4); }
+            70% { box-shadow: 0 0 0 20px rgba(74, 222, 128, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(74, 222, 128, 0); }
+        }
+        @keyframes pulse-fuchsia {
+            0% { box-shadow: 0 0 0 0 rgba(255, 0, 255, 0.4); }
+            70% { box-shadow: 0 0 0 20px rgba(255, 0, 255, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 0, 255, 0); }
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0.2; }
+            50% { transform: translateY(-100px) rotate(15deg); opacity: 0.5; }
+        }
+        @keyframes float-reverse {
+            0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0.2; }
+            50% { transform: translateY(-80px) rotate(-20deg); opacity: 0.4; }
+        }
+        .money-bill {
+            @apply absolute pointer-events-none select-none text-brand-yellow/20 text-6xl font-black;
+            filter: blur(1px);
+        }
+    </style>
+<script type="importmap">
+{
+  "imports": {
+    "@google/genai": "https://esm.sh/@google/genai@^1.40.0",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
+    "react/": "https://esm.sh/react@^19.2.4/",
+    "react": "https://esm.sh/react@^19.2.4"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-5592VPTVKN"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-5592VPTVKN');
+</script>
+
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '888825564059497');
+fbq('track', 'PageView');
+</script>
+<!-- End Meta Pixel Code -->
+</head>
+<body class="antialiased font-sans overflow-x-hidden">
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=888825564059497&ev=PageView&noscript=1"
+/></noscript>
+    <div id="root"></div>
+<script type="module" src="/index.tsx"></script>
+</body>
+</html>
