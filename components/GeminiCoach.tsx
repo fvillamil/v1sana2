@@ -14,6 +14,11 @@ const GeminiCoach: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
 
+  // Invisible Security States
+  const [honeypot, setHoneypot] = useState('');
+  const loadTime = useRef(Date.now());
+  const interactionCount = useRef(0);
+
   useEffect(() => {
     if (scrollRef.current) {
       scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
@@ -41,10 +46,33 @@ const GeminiCoach: React.FC = () => {
   const handleSend = async () => {
     if (!input.trim() || isLoading) return;
 
+    // 1. Honeypot check: if a bot filled this hidden field, silently reject
+    if (honeypot) {
+      console.warn("Bot detected via honeypot");
+      setInput('');
+      return;
+    }
+
+    // 2. Time-to-fill check: Humans take at least a couple of seconds to read and type
+    const timeElapsed = Date.now() - loadTime.current;
+    if (timeElapsed < 2000) {
+      console.warn("Bot detected via speed check");
+      setInput('');
+      return;
+    }
+
+    // 3. Interaction check: Ensure the user actually typed something
+    if (interactionCount.current === 0 && input.length > 0) {
+      console.warn("Bot detected via lack of interaction events");
+      setInput('');
+      return;
+    }
+
+    setIsLoading(true);
+
     const userMsg: Message = { role: 'user', text: input };
     setMessages(prev => [...prev, userMsg]);
     setInput('');
-    setIsLoading(true);
 
     // Log user message
     logMessage('user', userMsg.text);
@@ -157,12 +185,28 @@ const GeminiCoach: React.FC = () => {
 
             {/* Input Area - Clean White */}
             <div className="p-8 md:p-10 bg-white border-t border-slate-100">
+              {/* Honeypot field - hidden from humans, bots will fill it */}
+              <input 
+                type="text" 
+                name="contact_me_by_fax_only" 
+                value={honeypot}
+                onChange={(e) => setHoneypot(e.target.value)}
+                style={{ display: 'none' }} 
+                tabIndex={-1} 
+                autoComplete="off" 
+              />
               <div className="relative flex items-center">
                 <input 
                   type="text" 
                   value={input}
-                  onChange={(e) => setInput(e.target.value)}
-                  onKeyDown={(e) => e.key === 'Enter' && handleSend()}
+                  onChange={(e) => {
+                    setInput(e.target.value);
+                    interactionCount.current += 1;
+                  }}
+                  onKeyDown={(e) => {
+                    interactionCount.current += 1;
+                    e.key === 'Enter' && handleSend();
+                  }}
                   placeholder="Háblame de tu relación con el dinero..."
                   className="w-full bg-slate-50 border-2 border-slate-100 rounded-full px-10 py-6 text-slate-800 focus:outline-none focus:border-brand-fuchsia/30 focus:bg-white transition-all placeholder:text-slate-300 pr-32 text-lg md:text-xl shadow-inner"
                 />
